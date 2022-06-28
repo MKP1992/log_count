@@ -1,5 +1,5 @@
  # Log parser
- require './page_view'
+require './page_view'
 class Parser
   def parse(lines)
     lines.map { |line| parse_line(line) }.compact

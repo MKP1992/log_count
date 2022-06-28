@@ -1,13 +1,17 @@
 require './parser'
+require './console'
+require './sorter'
 
 file = File.open("webserver.log", 'r') 
 lines = file.readlines.map(&:chomp)
 page_views = Parser.new.parse(lines)
 puts "page views count"
-pp page_views.group_by(&:path).transform_values(&:count)
-puts "unique page "
-pp page_views.group_by(&:path).transform_values {|page_views|  page_views.uniq(&:ip).count}
-
+total_count = page_views.group_by(&:path).transform_values(&:count)    
+Console.print(Sorter.sort(total_count), "total count")
+puts "--------------------------------------------------------"
+puts "unique page"
+total_uniq_count = page_views.group_by(&:path).transform_values {|page_views|  page_views.uniq(&:ip).count}
+Console.print(Sorter.sort(total_uniq_count), "total unique count")
 #Problem solved now
 #Now optimize and change into class baesd
 #1. Need a Parser to parse the file
