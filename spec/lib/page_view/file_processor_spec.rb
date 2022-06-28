@@ -18,14 +18,14 @@ RSpec.describe PageView::FileProcessor, :integration do
     context 'when file is invalid' do
       let(:filename) { File.join(__dir__, 'fixtures', 'invalid.log') }
 
-      let(:result) do
+      let(:report) do
         <<~OUTPUT
-          /about 15 visits
-          /home 13 visits
-          /contact 12 visits
-          /help_page/1 12 visits
-          /about/2 9 visits
-          /index 4 visits
+          /about 15 total views
+          /home 13 total views
+          /contact 12 total views
+          /help_page/1 12 total views
+          /about/2 9 total views
+          /index 4 total views
           /home 12 unique views
           /about 11 unique views
           /help_page/1 10 unique views
@@ -36,21 +36,21 @@ RSpec.describe PageView::FileProcessor, :integration do
       end
 
       it 'still outputs page view report and ignores broken lines' do
-        expect { file_processor.call(filename) }.to output(result).to_stdout
+        expect { file_processor.call(filename) }.to output(report).to_stdout
       end
     end
 
     context 'when file is valid' do
       let(:filename) { File.join(__dir__, 'fixtures', 'valid.log') }
 
-      let(:result) do
+      let(:report) do
         <<~OUTPUT
-          /about/2 90 visits
-          /contact 89 visits
-          /index 82 visits
-          /about 81 visits
-          /help_page/1 80 visits
-          /home 78 visits
+          /about/2 90 total views
+          /contact 89 total views
+          /index 82 total views
+          /about 81 total views
+          /help_page/1 80 total views
+          /home 78 total views
           /contact 23 unique views
           /help_page/1 23 unique views
           /home 23 unique views
@@ -61,7 +61,7 @@ RSpec.describe PageView::FileProcessor, :integration do
       end
 
       it 'outputs page view report' do
-        expect { file_processor.call(filename) }.to output(result).to_stdout
+        expect { file_processor.call(filename) }.to output(report).to_stdout
       end
     end
   end
