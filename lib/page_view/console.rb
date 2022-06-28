@@ -3,7 +3,7 @@ module PageView
   class Console
     def output(page_views, title)
       page_views.each do |path, count|
-        puts "#{path} #{count} #{title}"
+        puts "#{path} #{count} #{title} views"
       end
     end
   end

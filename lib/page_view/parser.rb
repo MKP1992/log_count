@@ -3,11 +3,11 @@ module PageView
   class Parser
     FORMAT = %r(^\/(\w+\/\d+|\w+) (\d{3}\.\d{3}\.\d{3}.\d{3})$).freeze
     def parse(lines)
-      @views ||= lines.map(&:chomp).inject([]) do |views, line|
+      @parse ||= lines.map(&:chomp).inject([]) do |parse, line|
         if line.match(FORMAT)
-          views << parse_line(line)
+          parse << parse_line(line)
         else
-          views
+          parse
         end
       end
     end
